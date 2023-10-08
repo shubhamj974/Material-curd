@@ -1,0 +1,24 @@
+<form [formGroup]="postForm">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Ex. Angular" value="" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Content</mat-label>
+    <textarea matInput rows="3"></textarea>
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>User Id</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let num of numArr" [value]="num">
+        {{ num }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="text-right">
+    <button class="mr-2" mat-raised-button color="primary">Add Post</button>
+    <button mat-raised-button (click)="onCloseForm()" color="accent">
+      Cancel
+    </button>
+  </div>
+</form>

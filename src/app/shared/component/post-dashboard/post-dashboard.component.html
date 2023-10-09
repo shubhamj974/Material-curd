@@ -11,6 +11,10 @@
         <mat-icon>add</mat-icon>
       </button>
     </h3>
-    <app-post *ngFor="let item of postArr" [postData]="item"></app-post>
+    <app-post
+      *ngFor="let item of postArr"
+      [postData]="item"
+      (postObj)="onEditPost($event)"
+    ></app-post>
   </div>
 </div>

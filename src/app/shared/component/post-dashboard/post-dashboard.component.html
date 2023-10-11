@@ -15,6 +15,7 @@
       *ngFor="let item of postArr"
       [postData]="item"
       (postObj)="onEditPost($event)"
+      (postDelete)="onPostDelete($event)"
     ></app-post>
   </div>
 </div>

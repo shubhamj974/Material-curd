@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,8 @@ import { PostFormComponent } from './shared/component/post-form/post-form.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { PostComponent } from './shared/component/post/post.component';
+import { ConfirmPostComponent } from './shared/component/confirm-post/confirm-post.component';
+import { AuthIntercepterService } from './shared/service/auth-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { PostComponent } from './shared/component/post/post.component';
     NavbarComponent,
     PostDashboardComponent,
     PostFormComponent,
-    PostComponent
+    PostComponent,
+    ConfirmPostComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,10 +30,14 @@ import { PostComponent } from './shared/component/post/post.component';
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-
-
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthIntercepterService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

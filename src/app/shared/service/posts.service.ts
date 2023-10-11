@@ -11,6 +11,8 @@ export class PostsService {
   public postUrl = `${environment.baseUrl}/posts.json`;
   private postObjSub$: Subject<Ipost> = new Subject<Ipost>();
   public postObj = this.postObjSub$.asObservable();
+  private updatePostSub$: Subject<Ipost> = new Subject<Ipost>();
+  public updateObj = this.updatePostSub$.asObservable();
   constructor(private _http: HttpClient) {}
 
   getAllPost(): Observable<Ipost[]> {
@@ -35,5 +37,19 @@ export class PostsService {
 
   sentPostObj(post: Ipost) {
     this.postObjSub$.next(post);
+  }
+
+  sentUpdatePost(post: Ipost) {
+    this.updatePostSub$.next(post);
+  }
+
+  updatePost(post: Ipost): Observable<Ipost> {
+    let updateUrl = `${environment.baseUrl}/posts/${post.id}.json`;
+    return this._http.patch<Ipost>(updateUrl, post);
+  }
+
+  deletePost(id: string): Observable<null> {
+    let deleteUrl = `${environment.baseUrl}/posts/${id}.json`;
+    return this._http.delete<null>(deleteUrl);
   }
 }

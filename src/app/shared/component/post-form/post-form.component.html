@@ -7,11 +7,15 @@
       placeholder="Ex. Angular"
       value=""
     />
+    <mat-error> title is <strong>required</strong> </mat-error>
   </mat-form-field>
+
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Content</mat-label>
     <textarea formControlName="body" matInput rows="3"></textarea>
+    <mat-error> content is <strong>required</strong> </mat-error>
   </mat-form-field>
+
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>User Id</mat-label>
     <mat-select formControlName="userId">
@@ -19,7 +23,12 @@
         {{ num }}
       </mat-option>
     </mat-select>
+    <mat-error> userId is <strong>required</strong> </mat-error>
+    <mat-error *ngIf="f['userId'].invalid && f['userId'].hasError?.('pattern')"
+      >invalid userId only <strong>number</strong> are include</mat-error
+    >
   </mat-form-field>
+
   <div class="text-right">
     <button
       *ngIf="!isUpdate"
@@ -32,6 +41,7 @@
     </button>
 
     <button
+      (click)="onUpdate()"
       *ngIf="isUpdate"
       class="mr-2"
       type="button"

@@ -55,9 +55,9 @@ export class PostFormComponent implements OnInit {
   onPostHandler() {
     let post = this.postForm.value;
     if (this.postForm.valid) {
+      this._dialog.closeAll();
       this._postService.addPost(post).subscribe((res) => {
         this._postService.sentPostObj(post);
-        this._dialog.closeAll();
       });
       this.postForm.reset();
     }
@@ -65,12 +65,12 @@ export class PostFormComponent implements OnInit {
 
   onUpdate() {
     let obj = { ...this.postForm.value, id: this.updatePostData.id };
+    this._dialog.closeAll();
     this._postService
       .updatePost(obj)
       .subscribe(
         (res) => (
           this._postService.sentUpdatePost(res),
-          this._dialog.closeAll(),
           this._snackbarService.openSnackBar(
             `Post is updated whose title is ${res.title}`
           )

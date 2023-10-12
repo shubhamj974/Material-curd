@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Ipost } from '../model/post';
 
@@ -13,6 +13,10 @@ export class PostsService {
   public postObj = this.postObjSub$.asObservable();
   private updatePostSub$: Subject<Ipost> = new Subject<Ipost>();
   public updateObj = this.updatePostSub$.asObservable();
+  private loaderBehSub$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public loaderStatus: Observable<boolean> = this.loaderBehSub$.asObservable();
+
   constructor(private _http: HttpClient) {}
 
   getAllPost(): Observable<Ipost[]> {
@@ -51,5 +55,9 @@ export class PostsService {
   deletePost(id: string): Observable<null> {
     let deleteUrl = `${environment.baseUrl}/posts/${id}.json`;
     return this._http.delete<null>(deleteUrl);
+  }
+
+  sentLoaderStatus(status: boolean) {
+    this.loaderBehSub$.next(status);
   }
 }
